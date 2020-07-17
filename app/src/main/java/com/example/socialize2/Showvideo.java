@@ -34,11 +34,11 @@ import java.util.EventListener;
 public class
 
 Showvideo extends AppCompatActivity {
-    DatabaseReference databaseReference,likesreference;
+    DatabaseReference databaseReference,likesreference,dislikesreference;
     RecyclerView recyclerView;
     FirebaseDatabase database;
     String name,url;
-    Boolean likechecker = false;
+    Boolean likechecker = false ,dislikechecker = false;
 
 
     @Override
@@ -52,6 +52,8 @@ Showvideo extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("video");
         likesreference = database.getReference("likes");
+        dislikesreference = database.getReference("dislikes");
+
 
     }
 
@@ -130,6 +132,7 @@ Showvideo extends AppCompatActivity {
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                         String currentUserId = user.getUid();
                         final String postkey = getRef(position).getKey();
+                        final String prekey = getRef(position).getKey();
 
                         holder.setExoplayer(getApplication(),model.getName(),model.getVideourl());
 
@@ -153,6 +156,7 @@ Showvideo extends AppCompatActivity {
 
                             }
                         });
+                        //likes button
 
                         holder.setLikesbuttonStatus(postkey);
                         holder.likebutton.setOnClickListener(new View.OnClickListener() {
@@ -181,6 +185,34 @@ Showvideo extends AppCompatActivity {
                                 });
                             }
                         });
+                        //Dislike button
+                       holder.setDislikesbuttonStatus(prekey);
+                        holder.dislikebutton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dislikechecker = true;
+                                dislikesreference.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if(dislikechecker.equals(true)){
+                                            if (snapshot.child(prekey).hasChild(currentUserId)){
+                                                dislikesreference.child(prekey).child(currentUserId).removeValue();
+                                                dislikechecker = false;
+                                            }else{
+                                                dislikesreference.child(prekey).child(currentUserId).setValue(true);
+                                                likechecker = false;
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            }
+                        });
+
                     }
 
                     @NonNull

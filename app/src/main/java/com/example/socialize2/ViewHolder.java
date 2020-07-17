@@ -37,10 +37,10 @@ import com.google.firebase.database.ValueEventListener;
 public class ViewHolder extends RecyclerView.ViewHolder {
     SimpleExoPlayer exoPlayer;
     PlayerView playerView;
-    ImageButton likebutton;
-    TextView likesdisplay;
-    int likescount;
-    DatabaseReference likesref;
+    ImageButton likebutton,dislikebutton;
+    TextView likesdisplay,dislikesdisplay;
+    int likescount,dislikescount;
+    DatabaseReference likesref,dislikesref;
 
     public ViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -65,11 +65,15 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
     public void setLikesbuttonStatus(final String postkey){
         likebutton = itemView.findViewById(R.id.like_btn);
+
         likesdisplay = itemView.findViewById(R.id.likes_textview);
+
         likesref = FirebaseDatabase.getInstance().getReference("likes");
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getUid();
         String likes = "likes";
+
         likesref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -90,6 +94,38 @@ public class ViewHolder extends RecyclerView.ViewHolder {
 
             }
         });
+
+    }
+    public   void setDislikesbuttonStatus(final String prekey){
+
+        dislikebutton = itemView.findViewById(R.id.dislike_btn);
+        dislikesdisplay = itemView.findViewById(R.id.dislikes_textview);
+        dislikesref = FirebaseDatabase.getInstance().getReference("dislikes");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = user.getUid();
+        String dislikes = "dislikes";
+
+        dislikesref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.child(prekey).hasChild(userId)){
+                    dislikescount = (int)snapshot.child(prekey).getChildrenCount();
+                    dislikebutton.setImageResource(R.drawable.ic_baseline_thumb_down_24);
+                    dislikesdisplay.setText(Integer.toString(dislikescount)+dislikes);
+                }
+                else{
+                    dislikescount = (int)snapshot.child(prekey).getChildrenCount();
+                    dislikebutton.setImageResource(R.drawable.ic_baseline_thumb_down_alt_24);
+                    dislikesdisplay.setText(Integer.toString(dislikescount)+dislikes);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     public void  setExoplayer(Application application ,String name,String Videourl) {
