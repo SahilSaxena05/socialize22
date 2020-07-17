@@ -69,9 +69,7 @@ Showvideo extends AppCompatActivity {
                     @Override
                     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Member model) {
 
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        String currentUserId = user.getUid();
-                        final String postkey = getRef(position).getKey();
+
 
                         holder.setExoplayer(getApplication(),model.getName(),model.getVideourl());
 
@@ -96,33 +94,6 @@ Showvideo extends AppCompatActivity {
                         }
                     });
 
-                    holder.setLikesbuttonStatus(postkey);
-                    holder.likebutton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            likechecker = true;
-                            likesreference.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                                    if(likechecker.equals(true)){
-                                        if(dataSnapshot.child(postkey).hasChild(currentUserId)){
-                                            likesreference.child(postkey).child(currentUserId).removeValue();
-                                            likechecker = false;
-                                        }else{
-                                            likesreference.child(postkey).child(currentUserId).setValue(true);
-                                            likechecker = false;
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-                        }
-                    });
                     }
 
 
@@ -156,6 +127,10 @@ Showvideo extends AppCompatActivity {
                     @Override
                     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Member model) {
 
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        String currentUserId = user.getUid();
+                        final String postkey = getRef(position).getKey();
+
                         holder.setExoplayer(getApplication(),model.getName(),model.getVideourl());
 
                         holder.setOnClickListener(new ViewHolder.ClickListener() {
@@ -176,6 +151,34 @@ Showvideo extends AppCompatActivity {
                                 name = getItem(position).getName();
                                 showDeleteDialog(name);
 
+                            }
+                        });
+
+                        holder.setLikesbuttonStatus(postkey);
+                        holder.likebutton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                likechecker = true;
+                                likesreference.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                        if(likechecker.equals(true)){
+                                            if(dataSnapshot.child(postkey).hasChild(currentUserId)){
+                                                likesreference.child(postkey).child(currentUserId).removeValue();
+                                                likechecker = false;
+                                            }else{
+                                                likesreference.child(postkey).child(currentUserId).setValue(true);
+                                                likechecker = false;
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
                             }
                         });
                     }

@@ -80,7 +80,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
            }
            else{
                likescount = (int)dataSnapshot.child(postkey).getChildrenCount();
-               likebutton.setImageResource(R.drawable.ic_baseline_thumb_down_24);
+               likebutton.setImageResource(R.drawable.ic_baseline_thumb_up_alt_24);
                likesdisplay.setText(Integer.toString(likescount)+likes);
            }
             }
