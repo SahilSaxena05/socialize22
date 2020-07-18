@@ -32,7 +32,7 @@
         </com.google.android.exoplayer2.ui.PlayerView>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="196dp"
             android:layout_height="48dp"
             android:orientation="horizontal"
             android:paddingRight="7dp">
@@ -46,31 +46,14 @@
 
             <TextView
                 android:id="@+id/likes_textview"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
+                android:hint="likes"
                 android:paddingRight="53sp"
                 android:paddingBottom="11dp"
                 android:textColor="@android:color/black"
                 android:textSize="20sp" />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:id="@+id/dislike_btn"
-                android:src="@drawable/ic_baseline_thumb_down_24"/>
-
-            <TextView
-                android:id="@+id/dislikes_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:paddingRight="53sp"
-                android:paddingBottom="11dp"
-                android:textColor="@android:color/black"
-                android:textSize="20sp" />
-
 
 
         </LinearLayout>
