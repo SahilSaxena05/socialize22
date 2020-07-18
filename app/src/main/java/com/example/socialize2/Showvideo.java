@@ -134,6 +134,7 @@ Showvideo extends AppCompatActivity {
 
                         holder.setExoplayer(getApplication(),model.getName(),model.getVideourl());
 
+
                         holder.setOnClickListener(new ViewHolder.ClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
@@ -155,6 +156,21 @@ Showvideo extends AppCompatActivity {
                             }
                         });
                         holder.setLikesbuttonStatus(postkey);
+
+                        holder.commentbtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(Showvideo.this,CommentsActivity.class);
+                                intent.putExtra("postkey",position);
+                                startActivity(intent);
+
+
+                            }
+                        });
+
+
+
+
                         holder.likebutton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -195,6 +211,17 @@ Showvideo extends AppCompatActivity {
                 };
         firebaseRecyclerAdapter.startListening();
         recyclerView.setAdapter(firebaseRecyclerAdapter);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.username_item:
+                Intent intent = new Intent(Showvideo.this,Username.class);
+                startActivity(intent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

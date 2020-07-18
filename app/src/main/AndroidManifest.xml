@@ -9,9 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FullScreen"
+        <activity android:name=".CommentsActivity"></activity>
+        <activity android:name=".Username" />
+        <activity
+            android:name=".FullScreen"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".Showvideo" />
         <activity android:name=".UploadVideo" />
         <activity android:name=".Profile" />

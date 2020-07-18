@@ -37,7 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 public class ViewHolder extends RecyclerView.ViewHolder {
     SimpleExoPlayer exoPlayer;
     PlayerView playerView;
-    ImageButton likebutton;
+    ImageButton likebutton,commentbtn;
     TextView likesdisplay;
     int likescount;
     DatabaseReference likesref;
@@ -67,6 +67,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         likebutton = itemView.findViewById(R.id.like_btn);
         likesdisplay = itemView.findViewById(R.id.likes_textview);
         likesref = FirebaseDatabase.getInstance().getReference("likes");
+        commentbtn = itemView.findViewById(R.id.comment_activity_open);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getUid();
         String likes = "likes";

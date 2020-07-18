@@ -4,8 +4,18 @@ public class Member {
     private  String name;
     private  String Videourl;
     private String search;
-
+    private String Username;
     public  Member(){}
+
+    public String getUsername() {
+        return Username;
+    }
+
+    public void setUsername(String username) {
+        Username = username;
+    }
+
+
 
     public String getName() {
         return name;
